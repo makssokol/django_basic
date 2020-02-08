@@ -1,0 +1,126 @@
+body {
+    background-color: #f7e5e4;
+}
+
+html, body {
+    height: 100%;
+}
+
+.container {
+    max-width: 1440px;
+    min-width: 800px;
+    margin: 0 auto;
+    position: relative;
+    min-height: 100%;
+}
+
+.page {
+    height: 725px;   
+}
+
+  .header1 {
+    content: "";
+    display: block;
+    top: 12px;
+    left: 0;
+    width: 100%;
+    height: 70px;
+    background: url(/static/img/dance-henri-matisse.png) no-repeat;
+    background-size: cover;
+  }
+ 
+
+.header2 {
+    position: relative;
+    display: inline-block;
+    clear: both;
+
+}
+
+.logo {
+    margin-left: 40px;
+    float: left;
+}
+
+.phone {
+    color: #f5f6ce;
+    margin-left: 520px;
+    margin-top: 15px;
+    float: left;
+    position: absolute
+}
+
+.mail {
+    color: #f5f6ce;
+    margin-left: 1200px;
+    margin-top: 15px;
+    position: absolute
+}
+
+.header2 ul {
+    list-style-type: none;
+    margin-left: 350px;
+}
+
+.header2 ul li {
+    display: inline-block;
+    width: 170px;
+}
+
+.header2 ul li a {
+    text-decoration: none;
+
+}
+
+.footer {
+    height: 100px;
+    background-color: #ccc;
+    margin-top: -100px;
+    max-width: 1440px;
+    margin: -100px auto 0;
+    text-align: right;
+    padding-top: 40px;
+    padding-right: 40px;
+    font-size: 20px;
+}
+
+.clr {
+    height: 100px;
+}
+
+.about {
+    text-align: center;
+}
+
+.about h1 {
+    color: #a80606;
+    font-size: 70px;
+}
+
+.mainpage-index {
+    background-image: url(/static/img/main_back.jpg);
+
+    height: 650px;
+    clear: both;
+}
+
+.networks {
+    float: left;
+}
+
+.networks ul {
+    list-style-type: none;
+    font-size: 30px;
+    margin-block-start: 0px;
+}
+
+.networks ul li {
+    display: inline-block;
+    width: 50px;
+}
+
+.networks ul li a i {
+    color: white;
+
+}
+
