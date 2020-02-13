@@ -99,6 +99,11 @@ html, body {
 
 .mainpage-index {
     background-image: url(/static/img/main_back.jpg);
+    height: 650px;
+    clear: both;
+}
+
+.mainpage {
 
     height: 650px;
     clear: both;
@@ -121,6 +126,17 @@ html, body {
 
 .networks ul li a i {
     color: white;
-
 }
 
+.block {
+    float: left;
+    display: inline-flex;
+}
+
+.block a {
+    margin-left: 30px;
+}
+
+.active{
+    text-decoration: underline;
+}
