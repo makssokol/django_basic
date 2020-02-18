@@ -1,5 +1,8 @@
+from django.conf import settings
 from django.shortcuts import render
+from django.utils import timezone
 import datetime
+from .models import ArtObject, ArtCategory
 
 # Create your views here.
 
@@ -10,27 +13,12 @@ def main(request):
     return render(request, "mainapp/index.html", content)
 
 
-def products(request):
+def products(request, pk=None):
     title = "Картины"
-    products = [
-        {
-            "name": "Сикстинская мадонна",
-            "desc": "Вершина Возрождения",
-            "author": "Рафаэль Санти",
-            "image_src": "sixt_madonna.jpg",
-            "image_href": "/products/1/",
-            "alt": "картина 1",
-        },
-        {
-            "name": "Ночной дозор",
-            "desc": "Фламандский шедевр",
-            "author": "Рембрандт",
-            "image_src": "nightwatch.jpg",
-            "image_href": "/products/2/",
-            "alt": "картина 2",
-        }
-    ]
-    content = {"title": title, "products": products}
+    products = ArtObject.objects.all()
+    content = {"title": title, "products": products, "media_url": settings.MEDIA_URL}
+    if pk:
+        print(f"User select category: {pk}")
     return render(request, "mainapp/products.html", content)
 
 def contacts(request):
@@ -41,12 +29,8 @@ def contacts(request):
 
 def catalog(request):
     title = "Каталог"
-    links_menu = [
-        {'href': 'catalog_renessaince', 'name': 'Ренессанс'},
-        {'href': 'catalog_flemisch', 'name': 'Фламандцы'},
-        {'href': 'catalog_impressionism', 'name': 'Импрессионизм'},
-        {'href': 'catalog_russian', 'name': 'Русское искусство'},
-        {'href': 'catalog_avanguard', 'name': 'Авангард'},
-    ]
-    content = {"title": title, "links_menu": links_menu}
+    links_menu = ArtCategory.objects.all()
+    
+
+    content = {"title": title, "links_menu": links_menu, "media_url": settings.MEDIA_URL}
     return render(request, "mainapp/catalog.html", content)

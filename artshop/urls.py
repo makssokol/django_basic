@@ -13,6 +13,9 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf import settings
+from django.conf.urls import include
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
@@ -21,12 +24,12 @@ import mainapp.views as mainapp
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.main, name='main'),
-    path('catalog/', mainapp.catalog, name='catalog'),
-    path('catalog/renessaince', mainapp.catalog, name='catalog_renessaince'),
-    path('catalog/flemisch', mainapp.catalog, name='catalog_flemisch'),
-    path('catalog/impressionism', mainapp.catalog, name='catalog_impressionism'),
-    path('catalog/russian', mainapp.catalog, name='catalog_russian'),
-    path('catalog/avanguard', mainapp.catalog, name='catalog_avanguard'),
+    path('catalog/', include("mainapp.urls", namespace="catalog")),
     path('products/', mainapp.products, name='products'),
     path('contacts/', mainapp.contacts, name='contacts'),
 ]
+
+# include("mainapp.urls", namespace="catalog") - в таком варианте выдает ошибку "Reverse for 'catalog' not found. 'catalog' is not a valid view function or pattern name."
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
