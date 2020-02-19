@@ -27,6 +27,7 @@ urlpatterns = [
     path('catalog/', include("mainapp.urls", namespace="catalog")),
     path('products/', mainapp.products, name='products'),
     path('contacts/', mainapp.contacts, name='contacts'),
+    path("auth/", include("authapp.urls", namespace="auth")),
 ]
 
 # include("mainapp.urls", namespace="catalog") - в таком варианте выдает ошибку "Reverse for 'catalog' not found. 'catalog' is not a valid view function or pattern name."
