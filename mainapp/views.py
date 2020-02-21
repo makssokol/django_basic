@@ -1,8 +1,9 @@
 from django.conf import settings
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 import datetime
 from .models import Contact, ArtObject, ArtCategory
+from basketapp.models import Basket
 
 # Create your views here.
 
@@ -15,8 +16,32 @@ def main(request):
 
 def products(request, pk=None):
     title = "Картины"
-    products = ArtObject.objects.all()[:4]
-    content = {"title": title, "products": products, "media_url": settings.MEDIA_URL}
+
+    basket = []
+    if request.user.is_authenticated:
+        basket = Basket.objects.filter(user=request.user)
+    if pk is not None:
+        if pk == 0:
+            products = ArtObject.objects.all().order_by("price")
+            category = {"name": "all"}
+        else:
+            category = get_object_or_404(ArtCategory, pk=pk)
+            products = ArtObject.objects.filter(category__pk=pk).order_by("price")
+        content = {
+            "title": title, 
+            "products": products, 
+            "category": category, 
+            "media_url": settings.MEDIA_URL,
+            "basket": basket,
+            }
+        return render(request, "mainapp/products_list.html", content)
+    products = ArtObject.objects.all()
+    content = {
+        "title": title,
+        "products": products,
+        "media_url": settings.MEDIA_URL,
+        "basket": basket,
+    }
     if pk:
         print(f"User select category: {pk}")
     return render(request, "mainapp/products.html", content)
@@ -31,7 +56,5 @@ def contacts(request):
 def catalog(request):
     title = "Каталог"
     links_menu = ArtCategory.objects.all()
-    
-
     content = {"title": title, "links_menu": links_menu, "media_url": settings.MEDIA_URL}
     return render(request, "mainapp/catalog.html", content)

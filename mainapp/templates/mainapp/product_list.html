@@ -1,0 +1,28 @@
+{% extends 'mainapp/products.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+  <div class="mainpage">
+  <div class="title clearfix">
+            <h2>
+                Category: "{{ category.name: title }}"
+            </h2>
+        </div>
+    <div class="tab-content clearfix">
+    {% for product in products %}
+      <div class="block">
+        <a href="#"><img src="{{ media_url }}{{ product.image }}" alt="{{ product.artist }}">
+        </a>
+        <div class="product-text">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.artist }}</p>
+          <p>Category: {{ product.category.name }}</p>
+          <p>Price: {{ product.price|stringformat:"d"|intcomma }} $</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+</div>
+<div class="clr"></div>
+{% endblock content %}

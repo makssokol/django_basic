@@ -58,6 +58,72 @@ def forwards_func(apps, schema_editor):
         location="Musée d'Orsay",
     )
 
+    artobj_model.objects.create(
+        pk=4,
+        category=art_cat_obj,
+        name="Sistine Madonna",
+        image="art_images/sixt_madonna.jpg",
+        artist="Raffaello Sanzio da Urbino",
+        description="Truly rare and extraordinary work",
+        price=650000000,
+        location="Gemäldegalerie Alte Meister, Dresden",
+    )
+
+    artobj_model.objects.create(
+        pk=5,
+        category=art_cat_obj,
+        name="Holy Trinity",
+        image="art_images/masaccio_holy_trinity.jpg",
+        artist="Masaccio",
+        description="The earliest surviving painting to use systematic linear perspective",
+        price=150000000,
+        location="Santa Maria Novella, Florence",
+    )
+
+    artobj_model.objects.create(
+        pk=6,
+        category=art_cat_obj2,
+        name="Girl with a Pearl Earring",
+        image="art_images/vermeer_girl.jpg",
+        artist="Johannes Vermeer",
+        description="The most beautiful painting in the Netherlands",
+        price=270000000,
+        location="Mauritshuis, The Hague, Netherlands",
+    )
+
+    artobj_model.objects.create(
+        pk=7,
+        category=art_cat_obj2,
+        name="The Three Graces",
+        image="art_images/rubens_three_graces.jpg",
+        artist="Peter Paul Rubens",
+        description="Combination of Italian Baroque aesthetics with old style of Italian Renaissance",
+        price=340000000,
+        location="Mauritshuis, The Hague, Netherlands",
+    )
+
+    artobj_model.objects.create(
+        pk=8,
+        category=art_cat_obj3,
+        name="Woman with a Parasol",
+        image="art_images/monet_woman_parasol.jpg",
+        artist="Claude Monet",
+        description="One of Monet's most recognizable and revered works and of impressionism as a whole",
+        price=295000000,
+        location="National Gallery of Art, Washington",
+    )
+
+    artobj_model.objects.create(
+        pk=9,
+        category=art_cat_obj3,
+        name="Self-Portrait with Bandaged Ear",
+        image="art_images/van_gogh_self_portrait.jpg",
+        artist="Vincent van Gogh",
+        description="The only self-portrait with bandaged ear in art history",
+        price=140000000,
+        location="Courtauld Galleries, London",
+    )
+
     con_model.objects.create(
         pk=1,
         phone="+44 (0) 20 7293 5000",

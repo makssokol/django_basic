@@ -24,13 +24,12 @@ import mainapp.views as mainapp
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', mainapp.main, name='main'),
-    path('catalog/', include("mainapp.urls", namespace="catalog")),
+    path('catalog/', mainapp.catalog, name='catalog'),
     path('products/', mainapp.products, name='products'),
     path('contacts/', mainapp.contacts, name='contacts'),
-    path("auth/", include("authapp.urls", namespace="auth")),
+    path('auth/', include('authapp.urls', namespace='auth')),
+    path('basket/', include('basketapp.urls', namespace='basket')),
 ]
-
-# include("mainapp.urls", namespace="catalog") - в таком варианте выдает ошибку "Reverse for 'catalog' not found. 'catalog' is not a valid view function or pattern name."
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
