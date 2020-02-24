@@ -4,6 +4,7 @@ from django.utils import timezone
 import datetime
 from .models import Contact, ArtObject, ArtCategory
 from basketapp.models import Basket
+import random
 
 # Create your views here.
 
@@ -13,11 +14,20 @@ def main(request):
     content = {"title": title}
     return render(request, "mainapp/index.html", content)
 
+def get_basket(user):
+    if user.is_authenticated:
+        return Basket.objects.filter(user=user)
+    else:
+        return []
+
+def get_hot_product():
+    products = ArtObject.objects.all()
+    return random.sample(list(products), 1)[0]
 
 def products(request, pk=None):
     title = "Картины"
 
-    basket = []
+    basket = get_basket(request.user)
     if request.user.is_authenticated:
         basket = Basket.objects.filter(user=request.user)
     if pk is not None:
@@ -56,5 +66,23 @@ def contacts(request):
 def catalog(request):
     title = "Каталог"
     links_menu = ArtCategory.objects.all()
-    content = {"title": title, "links_menu": links_menu, "media_url": settings.MEDIA_URL}
+    basket = get_basket(request.user)
+    hot_product = get_hot_product()
+    content = {
+        "title": title, 
+        "links_menu": links_menu,
+        "hot_product": hot_product,
+        "media_url": settings.MEDIA_URL,
+        "basket": basket,
+        }
     return render(request, "mainapp/catalog.html", content)
+
+def product(request, pk):
+    title = "продукты"
+    content = {
+        "title": title,
+        "product": get_object_or_404(ArtObject, pk=pk),
+        "basket": get_basket(request.user),
+        "media_url": settings.MEDIA_URL,
+    }
+    return render(request, "mainapp/product.html", content)

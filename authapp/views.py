@@ -10,6 +10,7 @@ def login(request):
     title = "вход"
 
     login_form = ArtShopUserLoginForm(data=request.POST or None)
+    next_page = request.GET["next"] if "next" in request.GET.keys() else ""
     if request.method == "POST" and login_form.is_valid():
         username = request.POST["username"]
         password = request.POST["password"]
@@ -17,9 +18,11 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user and user.is_active:
             auth.login(request, user)
+            if "next_page" in request.POST.keys():
+                return HttpResponseRedirect(request.POST["next_page"])
             return HttpResponseRedirect(reverse("main"))
     
-    content = {"title": title, "login_form": login_form}
+    content = {"title": title, "login_form": login_form, "next_page": next_page}
     return render(request, "authapp/login.html", content)
 
 def logout(request):
@@ -30,7 +33,7 @@ def register(request):
     title = "регистрация"
 
     if request.method == "POST":
-        register_form = ArtShopUserRegisterForm(request.Post, request.FILES)
+        register_form = ArtShopUserRegisterForm(request.POST, request.FILES)
 
         if register_form.is_valid():
             register_form.save()
