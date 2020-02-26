@@ -4,6 +4,7 @@ from django.db import models
 class ArtCategory(models.Model):
     name = models.CharField(verbose_name="name", max_length=64, unique=True)
     description = models.TextField(verbose_name="description", blank=True)
+    is_active = models.BooleanField(verbose_name="category is active", default=True)
 
     def __str__(self):
         return self.name
