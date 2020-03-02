@@ -6,13 +6,13 @@
 <div class="new_category_form">
     <form class="form-horizontal" method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ form.as_p }}
+        {{ update_form.as_p }}
         <input class="form-control" type="submit" value="save">
     </form>
     <button class="btn btn-round form-control last">
-        <a href="{% url 'admin:categories' %}">
-            to categories list
+        <a href="{% url 'admin:products' category.pk %}">
+            to art objects list
         </a>
     </button>
 </div>
-{% endblock content %}
+{% endblock %}

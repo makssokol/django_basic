@@ -1,5 +1,5 @@
 {% extends 'mainapp/products.html' %}
-{% load static %}
+{% load static uppercase %}
 {% load humanize %}
 
 {% block content %}
@@ -9,6 +9,19 @@
                 Category: "{{ category.name|title }}"
             </h2>
         </div>
+    <div class="paginator">
+                {% if products.has_previous %}
+                <a href="{% url 'products:page' category.pk products.previous_page_number %}"><i
+                        class="fas fa-chevron-circle-left"></i></a>
+                {% endif %}
+                <span class="current">
+                    page {{ products.number }} from {{ products.paginator.num_pages }}
+                </span>
+                {% if products.has_next %}
+                <a href="{% url 'products:page' category.pk products.next_page_number %}"><i
+                        class="fas fa-chevron-circle-right"></i></a>
+                {% endif %}
+            </div>
     <div class="tab-content clearfix">
     {% for product in products %}
       <div class="block">
@@ -17,7 +30,7 @@
         <div class="product-text">
           <h4>{{ product.name }}</h4>
           <p>{{ product.artist }}</p>
-          <p>Category: {{ product.category.name }}</p>
+          <p>Category: {{ product.category.name|uppercase }}</p>
           <p>Price: {{ product.price|stringformat:"d"|intcomma }} $</p>
           <a href="{% url 'basket:add' product.pk %}">
             <button class="button-basket">

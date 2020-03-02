@@ -1,7 +1,7 @@
 from django import forms
 from authapp.forms import ArtShopUserEditForm
 from authapp.models import ArtShopUser
-from mainapp.models import ArtCategory
+from mainapp.models import ArtCategory, ArtObject
 
 class ArtShopUserAdminEditForm(ArtShopUserEditForm):
     class Meta:
@@ -18,4 +18,16 @@ class ArtCategoryEditForm(forms.ModelForm):
 
     class Meta:
         model = ArtCategory
+        fields = "__all__"
+
+
+class ArtObjectEditForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super(ArtObjectEditForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs["class"] = "form-control"
+            field.help_text = ""
+
+    class Meta:
+        model = ArtObject
         fields = "__all__"

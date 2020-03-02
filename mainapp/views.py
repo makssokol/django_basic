@@ -1,4 +1,5 @@
 from django.conf import settings
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.shortcuts import render, get_object_or_404
 from django.utils import timezone
 import datetime
@@ -21,10 +22,10 @@ def get_basket(user):
         return []
 
 def get_hot_product():
-    products = ArtObject.objects.all()
+    products = ArtObject.objects.filter(is_active=True, category__is_active=True)
     return random.sample(list(products), 1)[0]
 
-def products(request, pk=None):
+def products(request, pk=None, page=1):
     title = "Картины"
 
     basket = get_basket(request.user)
@@ -32,20 +33,27 @@ def products(request, pk=None):
         basket = Basket.objects.filter(user=request.user)
     if pk is not None:
         if pk == 0:
-            products = ArtObject.objects.all().order_by("price")
-            category = {"name": "all"}
+            products = ArtObject.objects.filter(is_active=True, category__is_active=True).order_by("price")
+            category = {"pk": 0, "name": "all"}
         else:
             category = get_object_or_404(ArtCategory, pk=pk)
-            products = ArtObject.objects.filter(category__pk=pk).order_by("price")
+            products = ArtObject.objects.filter(category__pk=pk, is_active=True, category__is_active=True).order_by("price")
+        paginator = Paginator(products, 2)
+        try:
+            products_paginator = paginator.page(page)    
+        except PageNotAnInteger:
+            products_paginator = paginator.page(1)
+        except EmptyPage:
+            products_paginator = paginator.page(paginator.num_pages)
         content = {
             "title": title, 
-            "products": products, 
+            "products": products_paginator, 
             "category": category, 
             "media_url": settings.MEDIA_URL,
             "basket": basket,
             }
         return render(request, "mainapp/products_list.html", content)
-    products = ArtObject.objects.all()
+    products = ArtObject.objects.filter(is_active=True, category__is_active=True)[:3]
     content = {
         "title": title,
         "products": products,
